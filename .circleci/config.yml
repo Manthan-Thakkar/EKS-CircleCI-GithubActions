@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  aws-eks: circleci/aws-eks@2.2.0
+  aws-cli: circleci/aws-cli@3.1
   helm: circleci/helm@1.1.2
 
 jobs:
@@ -15,9 +15,9 @@ jobs:
       # Build and test your application here
 
       # Authenticate with EKS
-      - aws-eks/eks-authenticate:
-          cluster-name: eks-dev-cluster
-          region: ap-south-1
+      # - aws-eks/eks-authenticate:
+      #     cluster-name: eks-dev-cluster
+      #     region: ap-south-1
 
       # Install Helm and deploy the application
       - helm/install-helm
@@ -33,7 +33,7 @@ jobs:
       #       replicas: 3
       - run:
           command: kubectl get pods -A
-          name: Kubectl Test
+          name: aws s3 ls
 workflows:
   main:
     jobs:
