@@ -35,9 +35,9 @@ jobs:
       - aws-ecr/build-and-push-image:
           dockerfile: Dockerfile
           # push-image: true
-          region: $ECR_REPO_REGION
+          region: ECR_REPO_REGION
           # registry-id: AWS_ECR_REGISTRY_ID
-          repo: $ECR_REPO_NAME
+          repo: ECR_REPO_NAME
           tag: latest,$CIRCLE_SHA1
       - run:
           command: |
