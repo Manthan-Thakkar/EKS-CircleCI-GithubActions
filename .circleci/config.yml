@@ -21,18 +21,21 @@ jobs:
 
       # Install Helm and deploy the application
       - helm/install-helm
-      - helm/upgrade-chart:
-          chart: my-helm-chart
-          release-name: my-release-name
-          namespace: my-namespace
-          values: |
-            image:
-              tag: $CIRCLE_SHA1
-            service:
-              type: LoadBalancer
-            replicas: 3
+      # - helm/upgrade-chart:
+      #     chart: my-helm-chart
+      #     release-name: my-release-name
+      #     namespace: my-namespace
+      #     values: |
+      #       image:
+      #         tag: $CIRCLE_SHA1
+      #       service:
+      #         type: LoadBalancer
+      #       replicas: 3
+      - run:
+          command: kubectl get pods -A
+          name: Kubectl Test
 workflows:
   main:
     jobs:
-      - deploy
+      - deploy:
           context: aws-credentials-context
