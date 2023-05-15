@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1
   aws-eks: circleci/aws-eks@2.2.0
+  aws-ecr: circleci/aws-ecr@8.2.1
   helm: circleci/helm@2.0.1
 
 jobs:
@@ -15,30 +16,16 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_DEFAULT_REGION
-
-      # Build and test your application here
-
-      # Authenticate with EKS
-      # - aws-eks/eks-authenticate:
-      #     cluster-name: eks-dev-cluster
-      #     region: ap-south-1
-
-      # Install Helm and deploy the application
-      # - helm/install-helm
-      # - helm/upgrade-chart:
-      #     chart: my-helm-chart
-      #     release-name: my-release-name
-      #     namespace: my-namespace
-      #     values: |
-      #       image:
-      #         tag: $CIRCLE_SHA1
-      #       service:
-      #         type: LoadBalancer
-      #       replicas: 3
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: eks-dev-cluster
           aws-region: ap-south-1
           install-kubectl: true
+      - aws-ecr/build-and-push-image:
+          dockerfile: Dockerfile
+          push-image: true
+          region: ap-south-1
+          repo: circle-ci-test
+          tag: latest
       - run:
           command: |
             kubectl get services
