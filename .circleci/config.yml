@@ -58,4 +58,3 @@ workflows:
     jobs:
       - deploy:
           context: aws-credentials-context
-
