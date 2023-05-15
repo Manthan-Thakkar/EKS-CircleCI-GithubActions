@@ -24,6 +24,7 @@ jobs:
           dockerfile: Dockerfile
           push-image: true
           region: ap-south-1
+          registry-id: 192182953222
           repo: circle-ci-test
           tag: latest
       - run:
