@@ -48,9 +48,6 @@ jobs:
             docker build -t $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com/$ECR_REPO_NAME:latest -t $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com/$ECR_REPO_NAME:$CIRCLE_SHA1 .
             docker push --all-tags $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com/$ECR_REPO_NAME
       - run:
-          name: Docker Build Push
-          command: |
-      - run:
           command: |
             kubectl get services
           name: Test cluster
