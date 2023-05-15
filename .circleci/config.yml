@@ -28,7 +28,7 @@ jobs:
           region: ap-south-1
           registry-id: AWS_ECR_REGISTRY_ID
           repo: circle-ci-test
-          tag: latest
+          tag: latest,CIRCLE_SHA1
       - run:
           command: |
             kubectl get services
