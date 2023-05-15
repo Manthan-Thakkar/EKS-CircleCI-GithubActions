@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1
   aws-eks: circleci/aws-eks@2.2.0
-  aws-ecr: circleci/aws-ecr@8.2.1
+  aws-ecr: orbies/aws-ecr@1.2.1
   helm: circleci/helm@2.0.1
 
 jobs:
@@ -34,9 +34,9 @@ jobs:
           install-kubectl: true
       - aws-ecr/build-and-push-image:
           dockerfile: Dockerfile
-          push-image: true
+          # push-image: true
           region: $ECR_REPO_REGION
-          registry-id: AWS_ECR_REGISTRY_ID
+          # registry-id: AWS_ECR_REGISTRY_ID
           repo: $ECR_REPO_NAME
           tag: latest,$CIRCLE_SHA1
       - run:
