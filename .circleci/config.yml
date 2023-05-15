@@ -10,10 +10,16 @@ jobs:
   deploy:
     executor: aws-cli/default
     environment:
+      EKS_CLUSTER_NAME: eks-dev-cluster
+      EKS_CLUSTER_REGION: ap-south-1
+      ECR_REPO_NAME: circle-ci-test
+      ECR_REPO_REGION: ap-south-1
       HELM_APP_NAME: sample-nginx-app
       HELM_APP_DIR: sample-nginx-app
       HELM_APP_NAMESPACE: default
     steps:
+      - run:
+          command: export AWS_ECR_REGISTRY_ID=$(aws sts get-caller-identity --query Account --output text)
       - checkout
       - helm/install-helm-client
       - setup_remote_docker:
@@ -23,15 +29,15 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_DEFAULT_REGION
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: eks-dev-cluster
-          aws-region: ap-south-1
+          cluster-name: $EKS_CLUSTER_NAME
+          aws-region: $EKS_CLUSTER_REGION
           install-kubectl: true
       - aws-ecr/build-and-push-image:
           dockerfile: Dockerfile
           push-image: true
-          region: ap-south-1
+          region: $ECR_REPO_REGION
           registry-id: AWS_ECR_REGISTRY_ID
-          repo: circle-ci-test
+          repo: $ECR_REPO_NAME
           tag: latest,$CIRCLE_SHA1
       - run:
           command: |
