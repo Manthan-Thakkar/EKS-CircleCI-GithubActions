@@ -9,6 +9,10 @@ orbs:
 jobs:
   deploy:
     executor: aws-cli/default
+    environment:
+      HELM_APP_NAME: sample-nginx-app
+      HELM_APP_DIR: sample-nginx-app
+      HELM_APP_NAMESPACE: default
     steps:
       - checkout
       - helm/install-helm-client
@@ -34,9 +38,9 @@ jobs:
             kubectl get services
           name: Test cluster
       - run:
-          command: |
-            helm ls
           name: Test Helm
+          command: |
+            helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE 
       - run:
           command: aws s3 ls
           name: aws s3 ls
