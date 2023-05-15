@@ -41,8 +41,8 @@ jobs:
           command: aws s3 ls
           name: aws s3 ls
       - run:
-          command: envs
-          name: env
+          command: env
+          name: envs
 workflows:
   main:
     jobs:
