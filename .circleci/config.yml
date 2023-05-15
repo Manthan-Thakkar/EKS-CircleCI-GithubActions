@@ -20,7 +20,7 @@ jobs:
       #     region: ap-south-1
 
       # Install Helm and deploy the application
-      - helm/install-helm
+      # - helm/install-helm
       # - helm/upgrade-chart:
       #     chart: my-helm-chart
       #     release-name: my-release-name
