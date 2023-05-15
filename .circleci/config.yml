@@ -18,8 +18,6 @@ jobs:
       HELM_APP_DIR: sample-nginx-app
       HELM_APP_NAMESPACE: default
     steps:
-      - run:
-          command: export AWS_ECR_REGISTRY_ID=$(aws sts get-caller-identity --query Account --output text)
       - checkout
       - helm/install-helm-client
       - setup_remote_docker:
@@ -28,6 +26,8 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_DEFAULT_REGION
+      - run:
+          command: export AWS_ECR_REGISTRY_ID=$(aws sts get-caller-identity --query Account --output text)
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: $EKS_CLUSTER_NAME
           aws-region: $EKS_CLUSTER_REGION
