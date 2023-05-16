@@ -32,14 +32,6 @@ jobs:
           cluster-name: $EKS_CLUSTER_NAME
           aws-region: $EKS_CLUSTER_REGION
           install-kubectl: true
-      # - aws-ecr/build-and-push-image:
-      #     setup-remote-docker: true
-      #     dockerfile: Dockerfile
-      #     push-image: true
-      #     region: $ECR_REPO_REGION
-      #     registry-id: AWS_ECR_REGISTRY_ID
-      #     repo: $ECR_REPO_NAME
-      #     tag: latest,$CIRCLE_SHA1
       - run:
           name: ECR Login And Docker Build Push
           command: |
