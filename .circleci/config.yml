@@ -26,8 +26,6 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_DEFAULT_REGION
-      - run:
-          command: export AWS_ECR_REGISTRY_ID=$(aws sts get-caller-identity --query Account --output text)
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: $EKS_CLUSTER_NAME
           aws-region: $EKS_CLUSTER_REGION
@@ -41,18 +39,12 @@ jobs:
             docker push --all-tags $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com/$ECR_REPO_NAME
       - run:
           command: |
-            kubectl get services
-          name: Test cluster
+            kubectl get pods -n $HELM_APP_NAMESPACE
+          name: Kubectl Check Pod in cluster
       - run:
-          name: Test Helm
+          name: Helm Upgrade Command
           command: |
-            helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE 
-      - run:
-          command: aws s3 ls
-          name: aws s3 ls
-      - run:
-          command: env
-          name: envs
+            helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE
 workflows:
   main:
     jobs:
