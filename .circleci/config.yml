@@ -49,9 +49,9 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           sts-role-arn: ROLE_ARN
-          profile-name: EKSAccess
+          profile-name: default
       - aws-eks/update-kubeconfig-with-authenticator:
-          aws-profile: EKSAccess
+          aws-profile: default
           cluster-name: $EKS_CLUSTER_NAME
           aws-region: $EKS_CLUSTER_REGION
           install-kubectl: true
