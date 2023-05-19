@@ -50,6 +50,9 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           sts-role-arn: ROLE_ARN
           profile-name: default
+      - run:
+          command: |
+            aws sts get-caller-identity
       - aws-eks/update-kubeconfig-with-authenticator:
           aws-profile: default
           cluster-name: $EKS_CLUSTER_NAME
