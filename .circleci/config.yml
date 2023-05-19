@@ -18,6 +18,7 @@ jobs:
       HELM_APP_NAME: sample-nginx-app
       HELM_APP_DIR: sample-nginx-app
       HELM_APP_NAMESPACE: default
+      ROLE_ARN: arn:aws:iam::192182953222:role/EKSFullAccess
     steps:
       - checkout
       - helm/install-helm-client
@@ -47,7 +48,7 @@ jobs:
       - aws-assume-role/assume:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          sts-role-arn: arn:aws:iam::192182953222:role/EKSFullAccess
+          sts-role-arn: ROLE_ARN
       - aws-eks/update-kubeconfig-with-authenticator:
           aws-profile: EKSAccess
           cluster-name: $EKS_CLUSTER_NAME
