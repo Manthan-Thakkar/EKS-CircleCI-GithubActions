@@ -33,15 +33,19 @@ jobs:
             aws ecr get-login-password --region $ECR_REPO_REGION | docker login --username AWS --password-stdin $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com
             docker build -t $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com/$ECR_REPO_NAME:latest -t $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com/$ECR_REPO_NAME:$CIRCLE_SHA1 .
             docker push --all-tags $AWS_ECR_REGISTRY_ID.dkr.ecr.$ECR_REPO_REGION.amazonaws.com/$ECR_REPO_NAME
-      - run:
-          name: test
-          command: | 
-              export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
-              $(aws sts assume-role \
-              --role-arn arn:aws:iam::192182953222:role/EKSFullAccess \
-              --role-session-name EKS-Access \
-              --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
-              --output text))
+#       - run:
+#           name: test
+#           command: | 
+#               export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
+#               $(aws sts assume-role \
+#               --role-arn arn:aws:iam::192182953222:role/EKSFullAccess \
+#               --role-session-name EKS-Access \
+#               --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
+#               --output text))
+      - aws-cli/setup:
+          profile-name: default
+          role-arn: arn:aws:iam::192182953222:role/EKSFullAccess
+          role-session-name: EKS-Access
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: $EKS_CLUSTER_NAME
           aws-region: $EKS_CLUSTER_REGION
