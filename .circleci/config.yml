@@ -57,6 +57,12 @@ jobs:
           install-kubectl: true
       - run:
           command: |
+            aws s3 ls
+      - run:
+          command: |
+            aws sts get-caller-identity
+      - run:
+          command: |
             kubectl get pods -n $HELM_APP_NAMESPACE
           name: Kubectl Check Pod in cluster
       - run:
