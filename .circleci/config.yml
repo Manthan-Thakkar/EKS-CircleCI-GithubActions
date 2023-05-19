@@ -43,7 +43,6 @@ jobs:
 #               --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
 #               --output text))
       - aws-cli/setup:
-          profile-name: default
           role-arn: arn:aws:iam::192182953222:role/EKSFullAccess
           role-session-name: EKS-Access
       - aws-eks/update-kubeconfig-with-authenticator:
