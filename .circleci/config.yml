@@ -42,7 +42,7 @@ jobs:
 #               --role-session-name EKS-Access \
 #               --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
 #               --output text))
-      - aws-cli/role-arn-setup::
+      - aws-cli/role-arn-setup:
           profile-name: EKSAccess
           role-arn: arn:aws:iam::192182953222:role/EKSFullAccess
           source-profile: default
