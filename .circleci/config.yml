@@ -5,7 +5,7 @@ orbs:
   aws-eks: circleci/aws-eks@2.2.0
   aws-ecr: circleci/aws-ecr@8.2.1
   helm: circleci/helm@2.0.1
-  aws-assume-role: holdaraffle/aws-assume-role@0.0.10
+  aws-assume-role: underw8/aws-assume-role@0.1.0
 
 jobs:
   deploy:
@@ -44,10 +44,10 @@ jobs:
 #               --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
 #               --output text))
 
-      - aws-assume-role/assume_role:
-          access_key_id: AWS_ACCESS_KEY_ID
-          secret_access_key: AWS_SECRET_ACCESS_KEY
-          role: arn:aws:iam::192182953222:role/EKSFullAccess
+      - aws-assume-role/assume:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          sts-role-arn: arn:aws:iam::192182953222:role/EKSFullAccess
       - aws-eks/update-kubeconfig-with-authenticator:
           aws-profile: EKSAccess
           cluster-name: $EKS_CLUSTER_NAME
