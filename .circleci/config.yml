@@ -42,10 +42,12 @@ jobs:
 #               --role-session-name EKS-Access \
 #               --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
 #               --output text))
-      - aws-cli/setup:
+      - aws-cli/role-arn-setup::
+          profile-name: EKSAccess
           role-arn: arn:aws:iam::192182953222:role/EKSFullAccess
-          role-session-name: EKS-Access
+          source-profile: default
       - aws-eks/update-kubeconfig-with-authenticator:
+          aws-profile: EKSAccess
           cluster-name: $EKS_CLUSTER_NAME
           aws-region: $EKS_CLUSTER_REGION
           install-kubectl: true
