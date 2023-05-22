@@ -25,8 +25,8 @@ jobs:
       - setup_remote_docker:
           version: 20.10.11
       - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-access-key-id: AWS_ACCESS_KEY_ID_1
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_1
           aws-region: AWS_DEFAULT_REGION
       - run:
           name: ECR Login And Docker Build Push
