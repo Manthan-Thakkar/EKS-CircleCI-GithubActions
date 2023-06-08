@@ -25,6 +25,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.EKS_CLUSTER_REGION }}
         role-to-assume: ${{ env.ROLE_ARN }}
+        role-duration-seconds: 900
+        role-session-name: MySessionName
     - name: TestManthan
       run: aws sts get-caller-identity
     # - name: Configure AWS Credentials
@@ -33,4 +35,3 @@ jobs:
     #     aws-region: ${{ env.EKS_CLUSTER_REGION }}
     - name: TestAssumeRole
       run: aws sts get-caller-identity
-      
