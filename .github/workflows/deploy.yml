@@ -33,3 +33,4 @@ jobs:
     #     aws-region: ${{ env.EKS_CLUSTER_REGION }}
     - name: TestAssumeRole
       run: aws sts get-caller-identity
+      
