@@ -23,13 +23,13 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: $EKS_CLUSTER_REGION
+        aws-region: ${{ env.EKS_CLUSTER_REGION }}
     - name: TestManthan
       run: aws sts get-caller-identity
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        role-to-assume: $ROLE_ARN
-        aws-region: $EKS_CLUSTER_REGION
+        role-to-assume: ${{ env.ROLE_ARN }}
+        aws-region: ${{ env.EKS_CLUSTER_REGION }}
     - name: TestAssumeRole
       run: aws sts get-caller-identity
