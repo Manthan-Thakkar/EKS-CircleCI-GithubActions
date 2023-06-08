@@ -26,12 +26,14 @@ jobs:
         aws-region: ${{ env.EKS_CLUSTER_REGION }}
         role-to-assume: ${{ env.ROLE_ARN }}
         role-duration-seconds: 900
-        role-session-name: MySessionName
-    - name: TestManthan
+        role-session-name: DeployStageSession
+    - name: Assume Role Check
       run: aws sts get-caller-identity
-    # - name: Configure AWS Credentials
-    #   uses: aws-actions/configure-aws-credentials@v2
-    #   with:
-    #     aws-region: ${{ env.EKS_CLUSTER_REGION }}
-    - name: TestAssumeRole
-      run: aws sts get-caller-identity
+    - name: Update kubeconfig file
+      id: Update-KubeConfig
+      run: aws eks update-kubeconfig --region $EKS_CLUSTER_REGION --name $EKS_CLUSTER_NAME
+    - name: check pods in namespace
+      id: Check-Pods-Before-Upgrade
+      run: kubectl get pods -n $HELM_APP_NAMESPACE
+    - name: Helm Upgrade
+      run: helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE
