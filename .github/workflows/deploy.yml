@@ -46,7 +46,7 @@ jobs:
       run: aws sts get-caller-identity
     - name: Update kubeconfig file
       id: Update-KubeConfig
-      run: echo aws eks update-kubeconfig --region $EKS_CLUSTER_REGION --name $EKS_CLUSTER_NAME
+      run: aws eks update-kubeconfig --region $EKS_CLUSTER_REGION --name $EKS_CLUSTER_NAME
     - name: check pods in namespace
       id: Check-Pods-Before-Upgrade
       run: kubectl get pods -n $HELM_APP_NAMESPACE
