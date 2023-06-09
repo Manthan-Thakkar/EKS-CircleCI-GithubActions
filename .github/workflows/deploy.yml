@@ -1,15 +1,20 @@
 name: EKS-DEPLOY-CICD
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: ['github-actions-setup']
-
+  workflow_dispatch:
+    inputs:
+      EKS_CLUSTER_NAME:
+        description: "EKS Cluster Name"
+        default: "eks-dev-cluster"
+      EKS_CLUSTER_REGION:
+        description: "EKS Cluster Region"
+        default: "eks-dev-cluster"
+      HELM_APP_NAME:
+        description: "Application Name"
+      HELM_APP_DIR:
+        description: "Application Helm Chart Directory"
+      HELM_APP_NAMESPACE:
+        description: "Helm chart installation NameSpace"
 env:
-  EKS_CLUSTER_NAME: eks-dev-cluster
-  EKS_CLUSTER_REGION: ap-south-1
-  HELM_APP_NAME: sample-nginx-app
-  HELM_APP_DIR: sample-nginx-app
-  HELM_APP_NAMESPACE: default
   ROLE_ARN: arn:aws:iam::192182953222:role/EKSFullAccess
 
 jobs:
