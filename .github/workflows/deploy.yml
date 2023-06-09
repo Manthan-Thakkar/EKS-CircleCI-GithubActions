@@ -1,4 +1,4 @@
-name: EKS-DEPLOY-CICD
+name: EKS-DEPLOY-STAGE
 on:
   workflow_dispatch:
     inputs:
