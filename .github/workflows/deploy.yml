@@ -7,7 +7,7 @@ on:
         default: "eks-dev-cluster"
       EKS_CLUSTER_REGION:
         description: "EKS Cluster Region"
-        default: "eks-dev-cluster"
+        default: "ap-south-1"
       HELM_APP_NAME:
         description: "Application Name"
       HELM_APP_DIR:
@@ -28,7 +28,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.EKS_CLUSTER_REGION }}
+        aws-region: ${{ inputs.EKS_CLUSTER_REGION }}
         role-to-assume: ${{ env.ROLE_ARN }}
         role-duration-seconds: 900
         role-session-name: DeployStageSession
@@ -36,9 +36,14 @@ jobs:
       run: aws sts get-caller-identity
     - name: Update kubeconfig file
       id: Update-KubeConfig
-      run: aws eks update-kubeconfig --region $EKS_CLUSTER_REGION --name $EKS_CLUSTER_NAME
+      run: echo aws eks update-kubeconfig --region $EKS_CLUSTER_REGION --name $EKS_CLUSTER_NAME
+#     - name: check pods in namespace
+#       id: Check-Pods-Before-Upgrade
+#       run: kubectl get pods -n $HELM_APP_NAMESPACE
+#     - name: Helm Upgrade
+#       run: helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE
     - name: check pods in namespace
       id: Check-Pods-Before-Upgrade
-      run: kubectl get pods -n $HELM_APP_NAMESPACE
+      run: echo $HELM_APP_NAMESPACE
     - name: Helm Upgrade
-      run: helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE
+      run: echo $HELM_APP_NAME $HELM_APP_DIR $HELM_APP_NAMESPACE
