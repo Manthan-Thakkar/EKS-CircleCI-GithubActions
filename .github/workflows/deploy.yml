@@ -5,15 +5,20 @@ on:
       EKS_CLUSTER_NAME:
         description: "EKS Cluster Name"
         default: "eks-dev-cluster"
+        required: true
       EKS_CLUSTER_REGION:
         description: "EKS Cluster Region"
         default: "ap-south-1"
+        required: true
       HELM_APP_NAME:
         description: "Application Name"
+        required: true
       HELM_APP_DIR:
         description: "Application Helm Chart Directory"
+        required: true
       HELM_APP_NAMESPACE:
         description: "Helm chart installation NameSpace"
+        required: true
 env:
   EKS_CLUSTER_NAME: ${{ github.event.inputs.EKS_CLUSTER_NAME }}
   EKS_CLUSTER_REGION: ${{ github.event.inputs.EKS_CLUSTER_REGION }}
