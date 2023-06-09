@@ -47,13 +47,8 @@ jobs:
     - name: Update kubeconfig file
       id: Update-KubeConfig
       run: echo aws eks update-kubeconfig --region $EKS_CLUSTER_REGION --name $EKS_CLUSTER_NAME
-#     - name: check pods in namespace
-#       id: Check-Pods-Before-Upgrade
-#       run: kubectl get pods -n $HELM_APP_NAMESPACE
-#     - name: Helm Upgrade
-#       run: helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE
     - name: check pods in namespace
       id: Check-Pods-Before-Upgrade
-      run: echo $HELM_APP_NAMESPACE
+      run: kubectl get pods -n $HELM_APP_NAMESPACE
     - name: Helm Upgrade
-      run: echo $HELM_APP_NAME $HELM_APP_DIR $HELM_APP_NAMESPACE
+      run: helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE
