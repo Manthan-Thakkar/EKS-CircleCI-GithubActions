@@ -19,12 +19,16 @@ on:
       HELM_APP_NAMESPACE:
         description: "Helm chart installation NameSpace"
         required: true
+      IMAGE_TAG:
+        description: "Set Image Tag for Web Worker PDF"
+        required: true
 env:
   EKS_CLUSTER_NAME: ${{ github.event.inputs.EKS_CLUSTER_NAME }}
   EKS_CLUSTER_REGION: ${{ github.event.inputs.EKS_CLUSTER_REGION }}
   HELM_APP_NAME: ${{ github.event.inputs.HELM_APP_NAME }}
   HELM_APP_DIR: ${{ github.event.inputs.HELM_APP_DIR }}
   HELM_APP_NAMESPACE: ${{ github.event.inputs.HELM_APP_NAMESPACE }}
+  IMAGE_TAG: ${{ github.event.inputs.IMAGE_TAG }}
   ROLE_ARN: arn:aws:iam::192182953222:role/EKSFullAccess
 
 jobs:
@@ -51,4 +55,4 @@ jobs:
       id: Check-Pods-Before-Upgrade
       run: kubectl get pods -n $HELM_APP_NAMESPACE
     - name: Helm Upgrade
-      run: helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE
+      run: helm upgrade -i $HELM_APP_NAME $HELM_APP_DIR -n $HELM_APP_NAMESPACE --set web_image.tag=$IMAGE_TAG --set worker_image.tag=$IMAGE_TAG --set pdf_image.tag=$IMAGE_TAG
