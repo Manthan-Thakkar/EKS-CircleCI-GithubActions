@@ -29,7 +29,7 @@ env:
   HELM_APP_DIR: ${{ github.event.inputs.HELM_APP_DIR }}
   HELM_APP_NAMESPACE: ${{ github.event.inputs.HELM_APP_NAMESPACE }}
   IMAGE_TAG: ${{ github.event.inputs.IMAGE_TAG }}
-  ROLE_ARN: arn:aws:iam::192182953222:role/EKSFullAccess
+  ROLE_ARN: ${{ secrets.ASSUME_ROLE_ARN }}
 
 jobs:
   build:
